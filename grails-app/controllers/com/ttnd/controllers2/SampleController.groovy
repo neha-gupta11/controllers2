@@ -16,5 +16,17 @@ class SampleController {
     }
 
     //params magic
+    def paramsConversion(){
+//        http://localhost:8080/controllers2/sample/paramsConversion?age=20&dob=23-02-2016
+        int age= params.int("age")
+        Date dob=params.date("dob","dd-MM-yyyy")
+        render age
+        render dob
+    }
 
+    def fetchList(){
+//        http://localhost:8080/controllers2/sample/fetchList?items=elem1&items=elem2&items=elem3
+        List list=params.list("items")
+        render list
+    }
 }

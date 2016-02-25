@@ -21,7 +21,7 @@ environments {
         dataSource {
             username = "root"
             password = "igdefault"
-            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+            dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:mysql://127.0.0.1:3306/sample?autoReconnect=true&useUnicode=yes&characterEncoding=UTF-8"
         }
     }

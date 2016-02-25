@@ -18,6 +18,10 @@ class EmployeeController {
 		respond employeeInstance
 	}
 
+	def binding(){
+
+	}
+
 	def create() {
 		respond new Employee(params)
 	}

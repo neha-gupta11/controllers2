@@ -1,6 +1,6 @@
 package com.ttnd.controllers2
 
-class TestController {
+class SampleController {
 
     def index() { }
 
@@ -9,5 +9,10 @@ class TestController {
         render stringParam
     }
 
+    //autoBinding
+    def autoBinding() {
+        render params.intParam
+        render params.stringParam
+    }
 
 }

@@ -6,6 +6,9 @@ class Employee {
     String employeeId
     int age
     String location
+    Date dob
+
+    static belongsTo = [dept:Department]
 
     static constraints = {
     }

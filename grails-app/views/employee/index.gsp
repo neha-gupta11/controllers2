@@ -26,6 +26,10 @@
 					
 						<g:sortableColumn property="age" title="${message(code: 'employee.age.label', default: 'Age')}" />
 					
+						<th><g:message code="employee.dept.label" default="Dept" /></th>
+					
+						<g:sortableColumn property="dob" title="${message(code: 'employee.dob.label', default: 'Dob')}" />
+					
 						<g:sortableColumn property="employeeId" title="${message(code: 'employee.employeeId.label', default: 'Employee Id')}" />
 					
 						<g:sortableColumn property="location" title="${message(code: 'employee.location.label', default: 'Location')}" />
@@ -39,6 +43,10 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${employeeInstance.id}">${fieldValue(bean: employeeInstance, field: "age")}</g:link></td>
+					
+						<td>${fieldValue(bean: employeeInstance, field: "dept")}</td>
+					
+						<td><g:formatDate date="${employeeInstance.dob}" /></td>
 					
 						<td>${fieldValue(bean: employeeInstance, field: "employeeId")}</td>
 					

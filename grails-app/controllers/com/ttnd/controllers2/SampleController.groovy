@@ -15,4 +15,6 @@ class SampleController {
         render params.stringParam
     }
 
+    //params magic
+
 }

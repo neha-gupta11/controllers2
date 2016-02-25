@@ -32,6 +32,24 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${employeeInstance?.dept}">
+				<li class="fieldcontain">
+					<span id="dept-label" class="property-label"><g:message code="employee.dept.label" default="Dept" /></span>
+					
+						<span class="property-value" aria-labelledby="dept-label"><g:link controller="department" action="show" id="${employeeInstance?.dept?.id}">${employeeInstance?.dept?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${employeeInstance?.dob}">
+				<li class="fieldcontain">
+					<span id="dob-label" class="property-label"><g:message code="employee.dob.label" default="Dob" /></span>
+					
+						<span class="property-value" aria-labelledby="dob-label"><g:formatDate date="${employeeInstance?.dob}" /></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${employeeInstance?.employeeId}">
 				<li class="fieldcontain">
 					<span id="employeeId-label" class="property-label"><g:message code="employee.employeeId.label" default="Employee Id" /></span>

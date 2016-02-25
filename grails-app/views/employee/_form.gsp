@@ -7,7 +7,25 @@
 		<g:message code="employee.age.label" default="Age" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="age" required="" value="${employeeInstance?.age}"/>
+	<g:field name="age" type="number" value="${employeeInstance.age}" required=""/>
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'dept', 'error')} required">
+	<label for="dept">
+		<g:message code="employee.dept.label" default="Dept" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="dept" name="dept.id" from="${com.ttnd.controllers2.Department.list()}" optionKey="id" required="" value="${employeeInstance?.dept?.id}" class="many-to-one"/>
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'dob', 'error')} required">
+	<label for="dob">
+		<g:message code="employee.dob.label" default="Dob" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:datePicker name="dob" precision="day"  value="${employeeInstance?.dob}"  />
 
 </div>
 

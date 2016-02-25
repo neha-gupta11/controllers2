@@ -1,107 +1,104 @@
 package com.ttnd.controllers2
 
 
+
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class EmployeeController {
 
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	def index(Integer max) {
-		params.max = Math.min(max ?: 10, 100)
-		respond Employee.list(params), model: [employeeInstanceCount: Employee.count()]
-	}
+    def index(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond Employee.list(params), model:[employeeInstanceCount: Employee.count()]
+    }
 
-	def show(Employee employeeInstance) {
-		respond employeeInstance
-	}
+    def show(Employee employeeInstance) {
+        respond employeeInstance
+    }
 
-	def binding(){
+    def create() {
+        respond new Employee(params)
+    }
 
-	}
+    @Transactional
+    def save(Employee employeeInstance) {
+        if (employeeInstance == null) {
+            notFound()
+            return
+        }
 
-	def create() {
-		respond new Employee(params)
-	}
+        if (employeeInstance.hasErrors()) {
+            respond employeeInstance.errors, view:'create'
+            return
+        }
 
-	@Transactional
-	def save(Employee employeeInstance) {
-		if (employeeInstance == null) {
-			notFound()
-			return
-		}
+        employeeInstance.save flush:true
 
-		if (employeeInstance.hasErrors()) {
-			respond employeeInstance.errors, view: 'create'
-			return
-		}
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'employee.label', default: 'Employee'), employeeInstance.id])
+                redirect employeeInstance
+            }
+            '*' { respond employeeInstance, [status: CREATED] }
+        }
+    }
 
-		employeeInstance.save flush: true
+    def edit(Employee employeeInstance) {
+        respond employeeInstance
+    }
 
-		request.withFormat {
-			form multipartForm {
-				flash.message = message(code: 'default.created.message', args: [message(code: 'employee.label', default: 'Employee'), employeeInstance.id])
-				redirect employeeInstance
-			}
-			'*' { respond employeeInstance, [status: CREATED] }
-		}
-	}
+    @Transactional
+    def update(Employee employeeInstance) {
+        if (employeeInstance == null) {
+            notFound()
+            return
+        }
 
-	def edit(Employee employeeInstance) {
-		respond employeeInstance
-	}
+        if (employeeInstance.hasErrors()) {
+            respond employeeInstance.errors, view:'edit'
+            return
+        }
 
-	@Transactional
-	def update(Employee employeeInstance) {
-		if (employeeInstance == null) {
-			notFound()
-			return
-		}
+        employeeInstance.save flush:true
 
-		if (employeeInstance.hasErrors()) {
-			respond employeeInstance.errors, view: 'edit'
-			return
-		}
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Employee.label', default: 'Employee'), employeeInstance.id])
+                redirect employeeInstance
+            }
+            '*'{ respond employeeInstance, [status: OK] }
+        }
+    }
 
-		employeeInstance.save flush: true
+    @Transactional
+    def delete(Employee employeeInstance) {
 
-		request.withFormat {
-			form multipartForm {
-				flash.message = message(code: 'default.updated.message', args: [message(code: 'Employee.label', default: 'Employee'), employeeInstance.id])
-				redirect employeeInstance
-			}
-			'*' { respond employeeInstance, [status: OK] }
-		}
-	}
+        if (employeeInstance == null) {
+            notFound()
+            return
+        }
 
-	@Transactional
-	def delete(Employee employeeInstance) {
+        employeeInstance.delete flush:true
 
-		if (employeeInstance == null) {
-			notFound()
-			return
-		}
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Employee.label', default: 'Employee'), employeeInstance.id])
+                redirect action:"index", method:"GET"
+            }
+            '*'{ render status: NO_CONTENT }
+        }
+    }
 
-		employeeInstance.delete flush: true
-
-		request.withFormat {
-			form multipartForm {
-				flash.message = message(code: 'default.deleted.message', args: [message(code: 'Employee.label', default: 'Employee'), employeeInstance.id])
-				redirect action: "index", method: "GET"
-			}
-			'*' { render status: NO_CONTENT }
-		}
-	}
-
-	protected void notFound() {
-		request.withFormat {
-			form multipartForm {
-				flash.message = message(code: 'default.not.found.message', args: [message(code: 'employee.label', default: 'Employee'), params.id])
-				redirect action: "index", method: "GET"
-			}
-			'*' { render status: NOT_FOUND }
-		}
-	}
+    protected void notFound() {
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'employee.label', default: 'Employee'), params.id])
+                redirect action: "index", method: "GET"
+            }
+            '*'{ render status: NOT_FOUND }
+        }
+    }
 }

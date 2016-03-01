@@ -11,5 +11,8 @@ class Employee {
     static belongsTo = [dept:Department]
 
     static constraints = {
+        employeeId unique: true
+        location nullable: true
+        dob nullable: true
     }
 }

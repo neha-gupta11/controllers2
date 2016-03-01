@@ -29,4 +29,25 @@ class SampleController {
         List list=params.list("items")
         render list
     }
+
+    def dataBindWithErrors(){
+        println "------------------------------------ "+params
+        def b = new Employee(params)
+        println b.hasErrors()
+        if (b.hasErrors()) {
+            println "The value ${b.errors.getFieldError('age')}"
+            if (b.errors.hasFieldErrors("age")) {
+                println b.errors.getFieldError("age").rejectedValue
+            }
+        }
+
+        render b.properties
+    }
+
+    def signleEndedAssociation(){
+        def b = new Employee(params)
+//        http://localhost:8080/controllers2/sample/signleEndedAssociation?dept.id=1
+        render b.properties
+    }
+
 }

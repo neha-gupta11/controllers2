@@ -1,4 +1,4 @@
-<%@ page import="com.ttnd.controllers2.Employee" %>
+<%@ page import="com.ttnd.controllers2.*" %>
 
 
 
@@ -7,7 +7,7 @@
 		<g:message code="employee.age.label" default="Age" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="age" type="number" value="${employeeInstance.age}" required=""/>
+	<g:field name="age" type="number" value="${employeeInstance?.age}" required=""/>
 
 </div>
 
@@ -16,7 +16,7 @@
 		<g:message code="employee.dept.label" default="Dept" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="dept" name="dept.id" from="${com.ttnd.controllers2.Department.list()}" optionKey="id" required="" value="${employeeInstance?.dept?.id}" class="many-to-one"/>
+	<g:select id="dept" name="dept.id" from="${Department.list()}" optionKey="id" required="" value="${employeeInstance?.dept?.id}" class="many-to-one"/>
 
 </div>
 

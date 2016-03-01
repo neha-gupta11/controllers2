@@ -1,6 +1,7 @@
 package com.ttnd.controllers2
 
 import com.ttnd.controllers2.co.EmployeeCO
+import org.springframework.web.multipart.MultipartFile
 
 class SampleController {
 
@@ -67,4 +68,23 @@ class SampleController {
 		render employeeCO.validate()
 	}
 
+	def fileUpload(){
+
+	}
+
+
+	def gFileUpload(){
+		MultipartFile myFile =params.myFile
+		File file = new File("/home/neha/${myFile.originalFilename}")
+		file.bytes = myFile.bytes
+		render "Done!!!"
+	}
+
+	def createOrderPDF(){
+		File file = new File("/home/neha/Pictures/2000px-Groovy-logo.svg.png")
+		byte[] orderPDF = file.getBytes()
+		response.setHeader("Content-disposition", "attachment; filename=" + file.name)
+		response.contentLength = orderPDF.length
+		response.outputStream << orderPDF
+	}
 }

@@ -1,53 +1,70 @@
 package com.ttnd.controllers2
 
+import com.ttnd.controllers2.co.EmployeeCO
+
 class SampleController {
 
-    def index() { }
+	def index() {}
 
-    def intBinding(int intParam,String stringParam) {
-        render intParam
-        render stringParam
-    }
+	def intBinding(int intParam, String stringParam) {
+		render intParam
+		render stringParam
+	}
 
-    //autoBinding
-    def autoBinding() {
-        render params.intParam
-        render params.stringParam
-    }
+	//autoBinding
+	def autoBinding() {
+		render params.intParam
+		render params.stringParam
+	}
 
-    //params magic
-    def paramsConversion(){
+	//params magic
+	def paramsConversion() {
 //        http://localhost:8080/controllers2/sample/paramsConversion?age=20&dob=23-02-2016
-        int age= params.int("age")
-        Date dob=params.date("dob","dd-MM-yyyy")
-        render age
-        render dob
-    }
+		int age = params.int("age")
+		Date dob = params.date("dob", "dd-MM-yyyy")
+		render age
+		render dob
+	}
 
-    def fetchList(){
+	def fetchList() {
 //        http://localhost:8080/controllers2/sample/fetchList?items=elem1&items=elem2&items=elem3
-        List list=params.list("items")
-        render list
-    }
+		List list = params.list("items")
+		render list
+	}
 
-    def dataBindWithErrors(){
-        println "------------------------------------ "+params
-        def b = new Employee(params)
-        println b.hasErrors()
-        if (b.hasErrors()) {
-            println "The value ${b.errors.getFieldError('age')}"
-            if (b.errors.hasFieldErrors("age")) {
-                println b.errors.getFieldError("age").rejectedValue
-            }
-        }
+	def dataBindWithErrors() {
+		println "------------------------------------ " + params
+		def b = new Employee(params)
+		println b.hasErrors()
+		if (b.hasErrors()) {
+			println "The value ${b.errors.getFieldError('age')}"
+			if (b.errors.hasFieldErrors("age")) {
+				println b.errors.getFieldError("age").rejectedValue
+			}
+		}
 
-        render b.properties
-    }
+		render b.properties
+	}
 
-    def signleEndedAssociation(){
-        def b = new Employee(params)
+	def signleEndedAssociation() {
+		def b = new Employee(params)
 //        http://localhost:8080/controllers2/sample/signleEndedAssociation?dept.id=1
-        render b.properties
-    }
+		render b.properties
+	}
+
+	def multipleDomainBinding() {
+		def b = new Employee(params)
+//        http://localhost:8080/controllers2/sample/signleEndedAssociation?dept.id=1
+		render b.properties
+	}
+
+	def usingCO(EmployeeCO employeeCO){
+		render employeeCO.properties
+		render "<br>"
+		render "-------------------------------------"
+		render employeeCO.errors
+		render "<br>"
+		render employeeCO.validate()
+	}
 
 }
